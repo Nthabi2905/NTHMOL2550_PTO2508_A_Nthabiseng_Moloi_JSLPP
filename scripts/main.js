@@ -34,3 +34,10 @@ async function initTaskBoard() {
 }
 
 document.addEventListener("DOMContentLoaded", initTaskBoard);
+function showLoading() {
+  document.body.innerHTML += "<p>Loading tasks...</p>";
+}
+
+function showError(message) {
+  document.body.innerHTML += `<p>${message}</p>`;
+}
