@@ -49,6 +49,13 @@ body {
   display: flex !important;
 }
 
+body.dark {
+  --primary-color: #2b2c37;
+  --secondary-color: #20212c;
+  --primary-font-color: #ffffff;
+  --secondary-font-color: #a8a4ff;
+}
+
 #side-logo-div {
   margin: 33px 113px 54px 34px; /* Spacing around logo */
   display: flex;
