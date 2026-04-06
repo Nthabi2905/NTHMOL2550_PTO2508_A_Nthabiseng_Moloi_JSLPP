@@ -1,5 +1,3 @@
-import { initialTasks } from "../../initialData.js";
-
 /**
  * Loads tasks from localStorage or initializes with initialTasks.
  * @returns {Array<Object>} The array of tasks.
@@ -13,10 +11,24 @@ export function loadTasksFromStorage() {
       console.error("Error parsing tasks from localStorage:", err);
     }
   }
+  /**
+   * Loads tasks from localStorage
+   * @returns {Array<Object>}
+   */
+  export function loadTasksFromStorage() {
+    const stored = localStorage.getItem("tasks");
 
-  // If no tasks in storage, initialize with initialTasks
-  localStorage.setItem("tasks", JSON.stringify(initialTasks));
-  return initialTasks;
+    if (stored) {
+      try {
+        return JSON.parse(stored);
+      } catch (err) {
+        console.error("Error parsing tasks from localStorage:", err);
+        return [];
+      }
+    }
+
+    return []; //IMPORTANT: no fallback data
+  }
 }
 
 /**
