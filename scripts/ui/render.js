@@ -29,3 +29,10 @@ export function renderTasks(tasks) {
     }
   });
 }
+function getTaskContainerByStatus(status) {
+  const safeStatus = status || "todo";
+  const column = document.querySelector(
+    `.column-div[data-status="${safeStatus}"]`,
+  );
+  return column ? column.querySelector(".tasks-container") : null;
+}
