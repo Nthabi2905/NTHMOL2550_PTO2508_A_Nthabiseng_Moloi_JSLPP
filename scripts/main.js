@@ -4,6 +4,7 @@ import {
   setupModalCloseHandler,
   setupNewTaskModalHandler,
 } from "./ui/modalHandlers.js";
+import { setupSidebarToggle } from "./ui/sidebar.js";
 
 function initTaskBoard() {
   const tasks = loadTasksFromStorage();

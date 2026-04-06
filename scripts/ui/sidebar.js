@@ -8,6 +8,18 @@ export function setupSidebarToggle() {
     mobileBtn.addEventListener("click", () => {
       sidebar.classList.toggle("show-sidebar");
     });
+
+    document.addEventListener("click", (e) => {
+      const sidebar = document.getElementById("side-bar-div");
+
+      if (
+        sidebar.classList.contains("show-sidebar") &&
+        !sidebar.contains(e.target) &&
+        !e.target.closest("#mobile-menu-btn")
+      ) {
+        sidebar.classList.remove("show-sidebar");
+      }
+    });
   }
 
   // Desktop toggle
