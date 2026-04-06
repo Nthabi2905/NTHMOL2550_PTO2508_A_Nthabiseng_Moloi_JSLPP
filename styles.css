@@ -495,3 +495,14 @@ textarea {
     padding-bottom: 0;
   }
 }
+
+@media screen and (max-width: 1023px) {
+  .side-bar.show-sidebar {
+    position: fixed;
+    top: 70px;
+    left: 0;
+    width: 70%;
+    z-index: 10;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  }
+}
