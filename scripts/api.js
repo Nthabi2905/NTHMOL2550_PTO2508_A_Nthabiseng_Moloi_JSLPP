@@ -1,11 +1,14 @@
+/**
+ * Fetch tasks from external API
+ * @returns {Promise<Array>} Array of tasks
+ */
 export async function fetchTasksFromAPI() {
-  try {
-    const res = await fetch("https://jsl-kanban-api.vercel.app/");
-    if (!res.ok) throw new Error("Failed to fetch");
+  const response = await fetch("https://jsl-kanban-api.vercel.app/");
 
-    const data = await res.json();
-    return data;
-  } catch (error) {
-    throw error;
+  if (!response.ok) {
+    throw new Error("Failed to fetch tasks");
   }
+
+  const data = await response.json();
+  return data;
 }

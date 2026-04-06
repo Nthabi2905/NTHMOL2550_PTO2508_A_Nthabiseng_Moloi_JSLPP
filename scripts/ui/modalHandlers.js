@@ -36,17 +36,3 @@ export function openTaskModal(task) {
   document.getElementById("task-status").value = task.status;
   modal.showModal();
 }
-
-let currentTaskId = null;
-
-export function openTaskModal(task) {
-  const modal = document.getElementById("task-modal");
-
-  currentTaskId = task.id;
-
-  document.getElementById("task-title").value = task.title;
-  document.getElementById("task-desc").value = task.description;
-  document.getElementById("task-status").value = task.status;
-
-  modal.showModal();
-}
