@@ -41,6 +41,14 @@ body {
   height: 100vh;
 }
 
+.hidden {
+  display: none;
+}
+
+.show-sidebar {
+  display: flex !important;
+}
+
 #side-logo-div {
   margin: 33px 113px 54px 34px; /* Spacing around logo */
   display: flex;
@@ -262,7 +270,9 @@ dialog {
   line-height: 1;
   cursor: pointer;
   color: #ea5555;
-  transition: transform 0.2s ease-in-out, font-weight 0.2s ease-in-out;
+  transition:
+    transform 0.2s ease-in-out,
+    font-weight 0.2s ease-in-out;
   transition-delay: 0.1s; /* Delay before scaling */
 }
 
