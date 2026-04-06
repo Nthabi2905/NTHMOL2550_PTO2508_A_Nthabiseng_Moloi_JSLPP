@@ -1,7 +1,3 @@
-/**
- * Fetch tasks from external API
- * @returns {Promise<Array>} Array of tasks
- */
 export async function fetchTasksFromAPI() {
   const response = await fetch("https://jsl-kanban-api.vercel.app/");
 
@@ -10,5 +6,12 @@ export async function fetchTasksFromAPI() {
   }
 
   const data = await response.json();
-  return data;
+
+  // 🔥 Ensure consistent structure
+  return data.map((task, index) => ({
+    id: task.id ?? index + 1,
+    title: task.title ?? "Untitled Task",
+    description: task.description ?? "",
+    status: task.status ?? "todo",
+  }));
 }
