@@ -41,21 +41,6 @@ body {
   height: 100vh;
 }
 
-.hidden {
-  display: none;
-}
-
-.show-sidebar {
-  display: flex !important;
-}
-
-body.dark {
-  --primary-color: #2b2c37;
-  --secondary-color: #20212c;
-  --primary-font-color: #ffffff;
-  --secondary-font-color: #a8a4ff;
-}
-
 #side-logo-div {
   margin: 33px 113px 54px 34px; /* Spacing around logo */
   display: flex;
@@ -493,16 +478,5 @@ textarea {
     padding-right: 14px;
     padding-top: 0;
     padding-bottom: 0;
-  }
-}
-
-@media screen and (max-width: 1023px) {
-  .side-bar.show-sidebar {
-    position: fixed;
-    top: 70px;
-    left: 0;
-    width: 70%;
-    z-index: 10;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
   }
 }
