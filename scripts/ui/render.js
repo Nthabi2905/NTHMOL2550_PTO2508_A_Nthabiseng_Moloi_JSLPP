@@ -1,31 +1,25 @@
-import { createTaskElement } from "./taskElement.js";
+import { saveTasks } from "../utils/localStorage.js";
 
 /**
- * Finds the task container element based on task status.
- */
-function getTaskContainerByStatus(status) {
-  const column = document.querySelector(`.column-div[data-status="${status}"]`);
-  return column ? column.querySelector(".tasks-container") : null;
-}
-
-/**
- * Clears all existing task-divs from all task containers.
- */
-export function clearExistingTasks() {
-  document.querySelectorAll(".tasks-container").forEach((container) => {
-    container.innerHTML = "";
-  });
-}
-
-/**
- * Renders tasks to their appropriate columns.
+ * Clears columns and renders tasks grouped by status
+ * @param {Array} tasks
  */
 export function renderTasks(tasks) {
+  const columns = {
+    todo: document.querySelector('[data-status="todo"] .tasks-container'),
+    doing: document.querySelector('[data-status="doing"] .tasks-container'),
+    done: document.querySelector('[data-status="done"] .tasks-container'),
+  };
+
+  // Clear existing content to prevent duplication
+  Object.values(columns).forEach((col) => (col.innerHTML = ""));
+
   tasks.forEach((task) => {
-    const container = getTaskContainerByStatus(task.status);
-    if (container) {
-      const taskElement = createTaskElement(task);
-      container.appendChild(taskElement);
-    }
+    const taskElement = document.createElement("div");
+    taskElement.classList.add("task-div");
+    taskElement.textContent = task.title;
+    taskElement.addEventListener("click", () => openEditModal(task, tasks));
+
+    columns[task.status]?.appendChild(taskElement);
   });
 }
