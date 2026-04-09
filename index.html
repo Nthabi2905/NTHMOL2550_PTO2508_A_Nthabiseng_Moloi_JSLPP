@@ -117,9 +117,13 @@
 
     <dialog class="modal-overlay">
       <form class="modal-window" id="new-task-modal-window">
-        <div class="modal-header">
-          <h3 class="modal-title">Add New Task</h3>
-          <span class="close-btn" id="cancel-add-btn">&times;</span>
+        <div class="button-group">
+          <button type="submit" class="primary-btn" id="save-task-changes">
+            Save Changes
+          </button>
+          <button type="button" class="danger-btn" id="delete-task-btn">
+            Delete Task
+          </button>
         </div>
 
         <div class="input-div">

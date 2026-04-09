@@ -50,3 +50,16 @@ export function openTaskModal(task) {
 
   modal.showModal();
 }
+
+const deleteBtn = document.getElementById("delete-task-btn");
+
+deleteBtn.addEventListener("click", () => {
+  const confirmDelete = confirm("Are you sure you want to delete this task?");
+  if (confirmDelete) {
+    // 1. Get task ID from a hidden field or global variable
+    // 2. Remove from tasks array
+    // 3. Update localStorage
+    // 4. Re-render UI
+    // 5. Close modal
+  }
+});

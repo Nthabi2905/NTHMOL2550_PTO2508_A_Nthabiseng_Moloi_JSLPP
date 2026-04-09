@@ -1,26 +1,30 @@
 /**
- * Loads tasks from localStorage
- * @returns {Array<Object>}
+ * Fetches tasks from API or loads from localStorage
+ * @returns {Promise<Array>} Array of task objects
  */
-export function loadTasksFromStorage() {
-  const stored = localStorage.getItem("tasks");
+export async function getTasks() {
+  const storedTasks = localStorage.getItem("tasks");
 
-  if (stored) {
+  if (storedTasks) {
+    return JSON.parse(storedTasks);
+  } else {
     try {
-      return JSON.parse(stored);
-    } catch (err) {
-      console.error("Error parsing tasks from localStorage:", err);
+      // Fetching from the required API
+      const response = await fetch("https://jsl-kanban-api.vercel.app/tasks");
+      const tasks = await response.json();
+      saveTasks(tasks);
+      return tasks;
+    } catch (error) {
+      console.error("Failed to fetch tasks:", error);
       return [];
     }
   }
-
-  return []; // No hardcoded fallback
 }
 
 /**
- * Saves tasks to localStorage
- * @param {Array<Object>} tasks
+ * Saves tasks array to localStorage
+ * @param {Array} tasks
  */
-export function saveTasksToStorage(tasks) {
+export function saveTasks(tasks) {
   localStorage.setItem("tasks", JSON.stringify(tasks));
 }

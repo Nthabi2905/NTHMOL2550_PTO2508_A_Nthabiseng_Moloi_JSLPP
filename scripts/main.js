@@ -1,24 +1,13 @@
-async function initTaskBoard() {
-  try {
-    showLoading();
+const themeSwitch = document.getElementById("theme-switch");
 
-    let tasks = loadTasksFromStorage();
+themeSwitch.addEventListener("change", () => {
+  document.body.classList.toggle("dark-theme");
+  const isDark = document.body.classList.contains("dark-theme");
+  localStorage.setItem("dark-theme", isDark ? "enabled" : "disabled");
+});
 
-    // 🔥 If no tasks → fetch from API
-    if (!tasks || tasks.length === 0) {
-      const apiTasks = await fetchTasksFromAPI();
-      saveTasksToStorage(apiTasks);
-      tasks = apiTasks;
-    }
-
-    clearExistingTasks();
-    renderTasks(tasks);
-
-    removeLoading();
-  } catch (error) {
-    showError("Failed to load tasks. Please try again.");
-  }
-
-  setupModalCloseHandler();
-  setupNewTaskModalHandler();
+// On Load: Check preference
+if (localStorage.getItem("dark-theme") === "enabled") {
+  document.body.classList.add("dark-theme");
+  themeSwitch.checked = true;
 }
