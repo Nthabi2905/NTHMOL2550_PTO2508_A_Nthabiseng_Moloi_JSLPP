@@ -29,24 +29,6 @@ body {
   font-size: 1rem; /* Base font size for rem scaling */
 }
 
-/* Dark Mode Overrides */
-body.dark-theme {
-  --primary-color: #2b2c37;
-  --secondary-color: #20212c;
-  --primary-font-color: #ffffff;
-}
-
-body.dark-theme .task-div {
-  background-color: #2b2c37;
-  color: white;
-}
-
-/* Sidebar Toggle */
-.side-bar.hidden {
-  transform: translateX(-100%);
-  transition: transform 0.3s ease;
-}
-
 /* ================
    Sidebar Layout
 ================ */
@@ -280,9 +262,7 @@ dialog {
   line-height: 1;
   cursor: pointer;
   color: #ea5555;
-  transition:
-    transform 0.2s ease-in-out,
-    font-weight 0.2s ease-in-out;
+  transition: transform 0.2s ease-in-out, font-weight 0.2s ease-in-out;
   transition-delay: 0.1s; /* Delay before scaling */
 }
 

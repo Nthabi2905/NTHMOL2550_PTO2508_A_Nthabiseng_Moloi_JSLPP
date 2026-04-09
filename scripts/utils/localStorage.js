@@ -1,38 +1,28 @@
-const STORAGE_KEY = "kanban-tasks";
+import { initialTasks } from "../../initialData.js";
 
 /**
- * Saves tasks to localStorage
- * @param {Array} tasks - Array of task objects to save
- */
-export function saveTasksToStorage(tasks) {
-  try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(tasks));
-  } catch (error) {
-    console.error("Error saving to localStorage:", error);
-  }
-}
-
-/**
- * Loads tasks from localStorage
- * @returns {Array|null} Array of task objects or null if none exist
+ * Loads tasks from localStorage or initializes with initialTasks.
+ * @returns {Array<Object>} The array of tasks.
  */
 export function loadTasksFromStorage() {
-  try {
-    const stored = localStorage.getItem(STORAGE_KEY);
-    return stored ? JSON.parse(stored) : null;
-  } catch (error) {
-    console.error("Error loading from localStorage:", error);
-    return null;
+  const stored = localStorage.getItem("tasks");
+  if (stored) {
+    try {
+      return JSON.parse(stored);
+    } catch (err) {
+      console.error("Error parsing tasks from localStorage:", err);
+    }
   }
+
+  // If no tasks in storage, initialize with initialTasks
+  localStorage.setItem("tasks", JSON.stringify(initialTasks));
+  return initialTasks;
 }
 
 /**
- * Clears all tasks from localStorage
+ * Saves the given task array to localStorage.
+ * @param {Array<Object>} tasks
  */
-export function clearTasksFromStorage() {
-  try {
-    localStorage.removeItem(STORAGE_KEY);
-  } catch (error) {
-    console.error("Error clearing localStorage:", error);
-  }
+export function saveTasksToStorage(tasks) {
+  localStorage.setItem("tasks", JSON.stringify(tasks));
 }
