@@ -1,16 +1,24 @@
-import { loadTasksFromStorage } from "./utils/localStorage.js";
-import { clearExistingTasks, renderTasks } from "./ui/render.js";
-import {
-  setupModalCloseHandler,
-  setupNewTaskModalHandler,
-} from "./ui/modalHandlers.js";
+async function initTaskBoard() {
+  try {
+    showLoading();
 
-function initTaskBoard() {
-  const tasks = loadTasksFromStorage();
-  clearExistingTasks();
-  renderTasks(tasks);
+    let tasks = loadTasksFromStorage();
+
+    // 🔥 If no tasks → fetch from API
+    if (!tasks || tasks.length === 0) {
+      const apiTasks = await fetchTasksFromAPI();
+      saveTasksToStorage(apiTasks);
+      tasks = apiTasks;
+    }
+
+    clearExistingTasks();
+    renderTasks(tasks);
+
+    removeLoading();
+  } catch (error) {
+    showError("Failed to load tasks. Please try again.");
+  }
+
   setupModalCloseHandler();
   setupNewTaskModalHandler();
 }
-
-document.addEventListener("DOMContentLoaded", initTaskBoard);
