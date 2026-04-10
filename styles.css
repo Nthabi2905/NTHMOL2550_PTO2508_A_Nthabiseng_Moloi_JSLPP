@@ -29,6 +29,45 @@ body.dark {
   --input-border: rgba(255, 255, 255, 0.2);
 }
 
+body.dark .task-div {
+  background-color: #2b2c37;
+  color: #ffffff;
+  box-shadow: none;
+}
+
+body.dark header {
+  background-color: #2b2c37;
+}
+
+body.dark .side-bar {
+  background-color: #2b2c37;
+}
+
+body.dark .hide-sidebar-btn {
+  background-color: #635fc7;
+  color: #ffffff;
+}
+
+body.dark .hide-sidebar-btn:hover {
+  background-color: #7a76e5;
+}
+
+body.dark .modal-window,
+body.dark .task-modal-content {
+  background-color: #2b2c37;
+  color: #ffffff;
+}
+
+body.dark #task-form input,
+body.dark #task-form textarea,
+body.dark #task-form select,
+body.dark #new-task-modal-window input,
+body.dark #new-task-modal-window textarea,
+body.dark #new-task-modal-window select {
+  background-color: #2b2c37;
+  color: #ffffff;
+}
+
 /* ================
    Base Elements
 ================ */
@@ -67,6 +106,62 @@ h4 {
   font-size: 0.75rem;
   letter-spacing: 0.125rem;
   margin: 0;
+}
+
+/* ========================
+   Theme Toggle
+======================== */
+
+.theme-toggle-wrapper {
+  position: fixed;
+  left: 16px;
+  bottom: 96px;
+  width: 252px;
+  height: 48px;
+  background-color: #f4f7fd;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  z-index: 25;
+}
+
+.theme-icon {
+  font-size: 1rem;
+  line-height: 1;
+}
+
+.theme-toggle {
+  width: 40px;
+  height: 20px;
+  border: none;
+  border-radius: 999px;
+  background-color: var(--primary-btn-color);
+  position: relative;
+  cursor: pointer;
+  padding: 0;
+}
+
+.theme-toggle-thumb {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 14px;
+  height: 14px;
+  background-color: white;
+  border-radius: 50%;
+  transition: transform 0.2s ease;
+}
+
+/* Move toggle circle when dark mode is active */
+body.dark .theme-toggle-thumb {
+  transform: translateX(20px);
+}
+
+/* Dark mode toggle background area */
+body.dark .theme-toggle-wrapper {
+  background-color: #20212c;
 }
 
 /* ================
@@ -523,10 +618,6 @@ button.submit-btn:active {
    Sidebar Hide / Show Controls
 ======================== */
 
-./* ========================
-   Sidebar Hide / Show Controls
-======================== */
-
 .hide-sidebar-btn {
   position: fixed;
   left: 0;
@@ -560,15 +651,19 @@ button.submit-btn:active {
   position: fixed;
   left: 0;
   bottom: 32px;
-  width: 56px;
+  width: 72px; /* increased from 56px */
   height: 48px;
+
   border: none;
   border-radius: 0 100px 100px 0;
   background-color: var(--primary-btn-color);
   color: #ffffff;
+
   display: none;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start; /* 👈 important */
+  padding-left: 18px; /* 👈 creates space from edge */
+
   font-size: 1.2rem;
   cursor: pointer;
   z-index: 30;
