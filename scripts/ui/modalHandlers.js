@@ -7,7 +7,7 @@ import { renderTasks, clearExistingTasks } from "./render.js";
 let currentTaskId = null;
 
 /**
- * Open task edit modal and prefill form fields
+ * Open task edit modal and prefill form fields.
  * @param {Object} task
  */
 export function openTaskModal(task) {
@@ -23,7 +23,7 @@ export function openTaskModal(task) {
 }
 
 /**
- * Set up task edit modal close, save, and delete handlers
+ * Set up task edit modal close, save, and delete handlers.
  */
 export function setupModalCloseHandler() {
   const closeBtn = document.getElementById("close-modal-btn");
@@ -76,7 +76,7 @@ export function setupModalCloseHandler() {
 }
 
 /**
- * Set up new task modal open, close, and create handlers
+ * Set up new task modal open, close, and create handlers.
  */
 export function setupNewTaskModalHandler() {
   const modal = document.querySelector(".modal-overlay");

@@ -1,7 +1,7 @@
 const STORAGE_KEY = "kanban_tasks";
 
 /**
- * Save tasks
+ * Save tasks to localStorage.
  * @param {Array} tasks
  */
 export function saveTasksToStorage(tasks) {
@@ -9,7 +9,7 @@ export function saveTasksToStorage(tasks) {
 }
 
 /**
- * Load tasks
+ * Load tasks from localStorage.
  * @returns {Array}
  */
 export function loadTasksFromStorage() {

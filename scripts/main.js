@@ -40,14 +40,24 @@ function setupSidebarToggle() {
   }
 
   if (mobileToggleBtn && sidebar) {
-    mobileToggleBtn.addEventListener("click", () => {
+    mobileToggleBtn.addEventListener("click", (event) => {
+      event.stopPropagation();
       sidebar.classList.toggle("show-sidebar");
+    });
+
+    document.addEventListener("click", (event) => {
+      const clickedInsideSidebar = sidebar.contains(event.target);
+      const clickedToggle = mobileToggleBtn.contains(event.target);
+
+      if (!clickedInsideSidebar && !clickedToggle) {
+        sidebar.classList.remove("show-sidebar");
+      }
     });
   }
 }
 
 /**
- * Set up light/dark theme toggle
+ * Set up light/dark theme toggle.
  */
 function setupThemeToggle() {
   const themeToggle = document.getElementById("theme-toggle");
@@ -71,7 +81,7 @@ function setupThemeToggle() {
 }
 
 /**
- * Initialise task board
+ * Initialise task board.
  */
 async function initTaskBoard() {
   try {
