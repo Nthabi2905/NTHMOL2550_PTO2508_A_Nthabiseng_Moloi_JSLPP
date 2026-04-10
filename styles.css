@@ -516,6 +516,87 @@ button.submit-btn:active {
   width: 100%;
 }
 
+/* ========================
+   Sidebar Hide / Show Controls
+======================== */
+
+.hide-sidebar-btn {
+  position: fixed;
+  left: 24px;
+  bottom: 24px;
+  width: 240px;
+  height: 56px;
+  border: none;
+  border-radius: 0 100px 100px 0;
+  background-color: #f4f7fd;
+  color: var(--primary-btn-color);
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 0 24px;
+  font-size: 0.9375rem;
+  font-weight: 700;
+  cursor: pointer;
+  z-index: 30;
+}
+
+.hide-sidebar-btn:hover {
+  background-color: #efeff9;
+}
+
+.hide-sidebar-icon {
+  font-size: 1.1rem;
+  line-height: 1;
+}
+
+.show-sidebar-btn {
+  position: fixed;
+  left: 0;
+  bottom: 32px;
+  width: 56px;
+  height: 48px;
+  border: none;
+  border-radius: 0 100px 100px 0;
+  background-color: var(--primary-btn-color);
+  color: #ffffff;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+  cursor: pointer;
+  z-index: 30;
+}
+
+.show-sidebar-btn:hover {
+  background-color: var(--primary-btn-hover);
+}
+
+/* Sidebar hidden state */
+body.sidebar-hidden .side-bar {
+  display: none;
+}
+
+body.sidebar-hidden .hide-sidebar-btn {
+  display: none;
+}
+
+body.sidebar-hidden .show-sidebar-btn {
+  display: flex;
+}
+
+/* Expand layout when sidebar is hidden */
+body.sidebar-hidden #layout {
+  width: 100%;
+}
+
+/* Tablet/mobile: use your existing menu button instead */
+@media screen and (max-width: 1023px) {
+  .hide-sidebar-btn,
+  .show-sidebar-btn {
+    display: none !important;
+  }
+}
+
 /* ===============
    Responsive Styles
 ================ */

@@ -12,9 +12,41 @@ import { fetchTasksFromAPI } from "./utils/api.js";
 const loadingEl = document.getElementById("loading");
 const errorEl = document.getElementById("error");
 
+function setupSidebarToggle() {
+  const hideSidebarBtn = document.getElementById("hide-sidebar-btn");
+  const showSidebarBtn = document.getElementById("show-sidebar-btn");
+
+  if (!hideSidebarBtn || !showSidebarBtn) return;
+
+  hideSidebarBtn.addEventListener("click", () => {
+    document.body.classList.add("sidebar-hidden");
+    localStorage.setItem("kanbanSidebar", "hidden");
+  });
+
+  showSidebarBtn.addEventListener("click", () => {
+    document.body.classList.remove("sidebar-hidden");
+    localStorage.setItem("kanbanSidebar", "shown");
+  });
+
+  const savedSidebarState = localStorage.getItem("kanbanSidebar");
+
+  if (savedSidebarState === "hidden") {
+    document.body.classList.add("sidebar-hidden");
+  }
+}
+
 /**
  * Initialise task board
  */
+
+function initTaskBoard() {
+  const tasks = loadTasksFromStorage();
+  clearExistingTasks();
+  renderTasks(tasks);
+  setupModalCloseHandler();
+  setupNewTaskModalHandler();
+  setupSidebarToggle();
+}
 async function initTaskBoard() {
   try {
     loadingEl.style.display = "block";
