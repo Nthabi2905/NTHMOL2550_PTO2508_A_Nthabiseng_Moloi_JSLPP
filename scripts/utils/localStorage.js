@@ -1,28 +1,18 @@
-import { initialTasks } from "../../initialData.js";
+const STORAGE_KEY = "kanban_tasks";
 
 /**
- * Loads tasks from localStorage or initializes with initialTasks.
- * @returns {Array<Object>} The array of tasks.
+ * Save tasks
+ * @param {Array} tasks
  */
-export function loadTasksFromStorage() {
-  const stored = localStorage.getItem("tasks");
-  if (stored) {
-    try {
-      return JSON.parse(stored);
-    } catch (err) {
-      console.error("Error parsing tasks from localStorage:", err);
-    }
-  }
-
-  // If no tasks in storage, initialize with initialTasks
-  localStorage.setItem("tasks", JSON.stringify(initialTasks));
-  return initialTasks;
+export function saveTasksToStorage(tasks) {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(tasks));
 }
 
 /**
- * Saves the given task array to localStorage.
- * @param {Array<Object>} tasks
+ * Load tasks
+ * @returns {Array}
  */
-export function saveTasksToStorage(tasks) {
-  localStorage.setItem("tasks", JSON.stringify(tasks));
+export function loadTasksFromStorage() {
+  const data = localStorage.getItem(STORAGE_KEY);
+  return data ? JSON.parse(data) : [];
 }
