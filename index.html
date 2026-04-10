@@ -48,7 +48,10 @@
           + Add New Task
         </button>
       </header>
-
+      <div id="loading" style="padding: 20px">Loading tasks...</div>
+      <div id="error" style="padding: 20px; color: red; display: none">
+        Failed to load tasks. Please refresh.
+      </div>
       <div class="container">
         <main class="card-column-main">
           <!-- Task Columns: Display tasks grouped by status (TODO, DOING, DONE). -->
