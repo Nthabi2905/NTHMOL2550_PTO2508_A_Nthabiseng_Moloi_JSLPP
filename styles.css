@@ -29,6 +29,12 @@ body {
   font-size: 1rem; /* Base font size for rem scaling */
 }
 
+body.dark {
+  --primary-color: #2b2c37;
+  --secondary-color: #20212c;
+  --primary-font-color: #ffffff;
+}
+
 /* ================
    Sidebar Layout
 ================ */
@@ -262,7 +268,9 @@ dialog {
   line-height: 1;
   cursor: pointer;
   color: #ea5555;
-  transition: transform 0.2s ease-in-out, font-weight 0.2s ease-in-out;
+  transition:
+    transform 0.2s ease-in-out,
+    font-weight 0.2s ease-in-out;
   transition-delay: 0.1s; /* Delay before scaling */
 }
 

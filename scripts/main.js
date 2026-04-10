@@ -40,6 +40,23 @@ async function initTaskBoard() {
   document.getElementById("toggle-sidebar").addEventListener("click", () => {
     document.getElementById("side-bar-div").classList.toggle("show-sidebar");
   });
+
+  const themeToggle = document.getElementById("theme-toggle");
+
+  themeToggle.addEventListener("click", () => {
+    document.body.classList.toggle("dark");
+
+    localStorage.setItem(
+      "theme",
+      document.body.classList.contains("dark") ? "dark" : "light",
+    );
+  });
+
+  // Load theme
+  const savedTheme = localStorage.getItem("theme");
+  if (savedTheme === "dark") {
+    document.body.classList.add("dark");
+  }
 }
 
 document.addEventListener("DOMContentLoaded", initTaskBoard);
