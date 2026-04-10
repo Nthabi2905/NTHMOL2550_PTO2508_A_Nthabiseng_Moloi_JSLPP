@@ -6,6 +6,10 @@ import { renderTasks, clearExistingTasks } from "./render.js";
 
 let currentTaskId = null;
 
+/**
+ * Open task edit modal and prefill form fields
+ * @param {Object} task
+ */
 export function openTaskModal(task) {
   const modal = document.getElementById("task-modal");
 
@@ -19,16 +23,20 @@ export function openTaskModal(task) {
 }
 
 /**
- * Close modal
+ * Set up task edit modal close, save, and delete handlers
  */
 export function setupModalCloseHandler() {
-  document.getElementById("close-modal-btn").addEventListener("click", () => {
-    document.getElementById("task-modal").close();
+  const closeBtn = document.getElementById("close-modal-btn");
+  const taskForm = document.getElementById("task-form");
+  const deleteBtn = document.getElementById("delete-task-btn");
+  const taskModal = document.getElementById("task-modal");
+
+  closeBtn.addEventListener("click", () => {
+    taskModal.close();
   });
 
-  // SAVE CHANGES
-  document.getElementById("task-form").addEventListener("submit", (e) => {
-    e.preventDefault();
+  taskForm.addEventListener("submit", (event) => {
+    event.preventDefault();
 
     const tasks = loadTasksFromStorage();
 
@@ -45,63 +53,64 @@ export function setupModalCloseHandler() {
     });
 
     saveTasksToStorage(updatedTasks);
-
     clearExistingTasks();
     renderTasks(updatedTasks);
-
-    document.getElementById("task-modal").close();
+    taskModal.close();
   });
-  document.getElementById("delete-task-btn").addEventListener("click", () => {
-    if (!confirm("Are you sure you want to delete this task?")) return;
+
+  deleteBtn.addEventListener("click", () => {
+    const confirmed = window.confirm(
+      "Are you sure you want to delete this task?",
+    );
+
+    if (!confirmed) return;
 
     let tasks = loadTasksFromStorage();
-
     tasks = tasks.filter((task) => task.id !== currentTaskId);
 
     saveTasksToStorage(tasks);
-
     clearExistingTasks();
     renderTasks(tasks);
-
-    document.getElementById("task-modal").close();
+    taskModal.close();
   });
 }
 
 /**
- * New Task modal
+ * Set up new task modal open, close, and create handlers
  */
 export function setupNewTaskModalHandler() {
   const modal = document.querySelector(".modal-overlay");
+  const addTaskBtn = document.getElementById("add-new-task-btn");
+  const cancelBtn = document.getElementById("cancel-add-btn");
+  const newTaskForm = document.getElementById("new-task-modal-window");
 
-  document.getElementById("add-new-task-btn").addEventListener("click", () => {
+  addTaskBtn.addEventListener("click", () => {
     modal.showModal();
   });
 
-  document.getElementById("cancel-add-btn").addEventListener("click", () => {
+  cancelBtn.addEventListener("click", () => {
     modal.close();
   });
 
-  document
-    .getElementById("new-task-modal-window")
-    .addEventListener("submit", (e) => {
-      e.preventDefault();
+  newTaskForm.addEventListener("submit", (event) => {
+    event.preventDefault();
 
-      const tasks = loadTasksFromStorage();
+    const tasks = loadTasksFromStorage();
 
-      const newTask = {
-        id: Date.now(),
-        title: document.getElementById("title-input").value,
-        description: document.getElementById("desc-input").value,
-        status: document.getElementById("select-status").value,
-      };
+    const newTask = {
+      id: Date.now(),
+      title: document.getElementById("title-input").value,
+      description: document.getElementById("desc-input").value,
+      status: document.getElementById("select-status").value,
+    };
 
-      tasks.push(newTask);
+    tasks.push(newTask);
 
-      saveTasksToStorage(tasks);
+    saveTasksToStorage(tasks);
+    clearExistingTasks();
+    renderTasks(tasks);
 
-      clearExistingTasks();
-      renderTasks(tasks);
-
-      modal.close();
-    });
+    newTaskForm.reset();
+    modal.close();
+  });
 }

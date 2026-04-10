@@ -14,6 +14,40 @@ const errorEl = document.getElementById("error");
 
 /**
  * Set up desktop hide/show sidebar buttons
+ * and mobile sidebar toggle.
+ */
+function setupSidebarToggle() {
+  const hideSidebarBtn = document.getElementById("hide-sidebar-btn");
+  const showSidebarBtn = document.getElementById("show-sidebar-btn");
+  const mobileToggleBtn = document.getElementById("toggle-sidebar");
+  const sidebar = document.getElementById("side-bar-div");
+
+  if (hideSidebarBtn && showSidebarBtn) {
+    hideSidebarBtn.addEventListener("click", () => {
+      document.body.classList.add("sidebar-hidden");
+      localStorage.setItem("kanbanSidebar", "hidden");
+    });
+
+    showSidebarBtn.addEventListener("click", () => {
+      document.body.classList.remove("sidebar-hidden");
+      localStorage.setItem("kanbanSidebar", "shown");
+    });
+
+    const savedSidebarState = localStorage.getItem("kanbanSidebar");
+    if (savedSidebarState === "hidden") {
+      document.body.classList.add("sidebar-hidden");
+    }
+  }
+
+  if (mobileToggleBtn && sidebar) {
+    mobileToggleBtn.addEventListener("click", () => {
+      sidebar.classList.toggle("show-sidebar");
+    });
+  }
+}
+
+/**
+ * Set up light/dark theme toggle
  */
 function setupThemeToggle() {
   const themeToggle = document.getElementById("theme-toggle");
@@ -21,7 +55,6 @@ function setupThemeToggle() {
   if (!themeToggle) return;
 
   const savedTheme = localStorage.getItem("theme");
-
   if (savedTheme === "dark") {
     document.body.classList.add("dark");
   }
@@ -35,29 +68,6 @@ function setupThemeToggle() {
 
     localStorage.setItem("theme", currentTheme);
   });
-}
-
-/**
- * Set up theme toggle if the button exists
- */
-function setupThemeToggle() {
-  const themeToggle = document.getElementById("theme-toggle");
-
-  const savedTheme = localStorage.getItem("theme");
-  if (savedTheme === "dark") {
-    document.body.classList.add("dark");
-  }
-
-  if (themeToggle) {
-    themeToggle.addEventListener("click", () => {
-      document.body.classList.toggle("dark");
-
-      localStorage.setItem(
-        "theme",
-        document.body.classList.contains("dark") ? "dark" : "light",
-      );
-    });
-  }
 }
 
 /**
@@ -77,7 +87,7 @@ async function initTaskBoard() {
     clearExistingTasks();
     renderTasks(tasks);
   } catch (error) {
-    console.error(error);
+    console.error("Failed to initialise task board:", error);
     errorEl.style.display = "block";
   } finally {
     loadingEl.style.display = "none";
@@ -86,7 +96,6 @@ async function initTaskBoard() {
   setupModalCloseHandler();
   setupNewTaskModalHandler();
   setupSidebarToggle();
-  setupThemeToggle();
   setupThemeToggle();
 }
 
