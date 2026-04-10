@@ -15,54 +15,26 @@ const errorEl = document.getElementById("error");
 /**
  * Set up desktop hide/show sidebar buttons
  */
-function setupSidebarToggle() {
-  const hideSidebarBtn = document.getElementById("hide-sidebar-btn");
-  const showSidebarBtn = document.getElementById("show-sidebar-btn");
-  const mobileToggleBtn = document.getElementById("toggle-sidebar");
-  const sidebar = document.getElementById("side-bar-div");
+function setupThemeToggle() {
+  const themeToggle = document.getElementById("theme-toggle");
 
-  if (hideSidebarBtn && showSidebarBtn) {
-    hideSidebarBtn.addEventListener("click", () => {
-      document.body.classList.add("sidebar-hidden");
-      localStorage.setItem("kanbanSidebar", "hidden");
-    });
+  if (!themeToggle) return;
 
-    showSidebarBtn.addEventListener("click", () => {
-      document.body.classList.remove("sidebar-hidden");
-      localStorage.setItem("kanbanSidebar", "shown");
-    });
+  const savedTheme = localStorage.getItem("theme");
 
-    const savedSidebarState = localStorage.getItem("kanbanSidebar");
-    if (savedSidebarState === "hidden") {
-      document.body.classList.add("sidebar-hidden");
-    }
+  if (savedTheme === "dark") {
+    document.body.classList.add("dark");
   }
 
-  if (mobileToggleBtn && sidebar) {
-    mobileToggleBtn.addEventListener("click", () => {
-      sidebar.classList.toggle("show-sidebar");
-    });
-  }
+  themeToggle.addEventListener("click", () => {
+    document.body.classList.toggle("dark");
 
-  function setupThemeToggle() {
-    const themeToggle = document.getElementById("theme-toggle");
+    const currentTheme = document.body.classList.contains("dark")
+      ? "dark"
+      : "light";
 
-    const savedTheme = localStorage.getItem("theme");
-    if (savedTheme === "dark") {
-      document.body.classList.add("dark");
-    }
-
-    if (themeToggle) {
-      themeToggle.addEventListener("click", () => {
-        document.body.classList.toggle("dark");
-
-        localStorage.setItem(
-          "theme",
-          document.body.classList.contains("dark") ? "dark" : "light",
-        );
-      });
-    }
-  }
+    localStorage.setItem("theme", currentTheme);
+  });
 }
 
 /**
