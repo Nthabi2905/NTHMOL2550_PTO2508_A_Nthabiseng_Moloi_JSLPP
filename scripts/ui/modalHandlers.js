@@ -1,38 +1,93 @@
-import { addNewTask } from "../tasks/taskManager.js";
+import {
+  saveTasksToStorage,
+  loadTasksFromStorage,
+} from "../utils/localStorage.js";
+import { renderTasks, clearExistingTasks } from "./render.js";
 
-export function setupModalCloseHandler() {
-  const modal = document.getElementById("task-modal");
-  const closeBtn = document.getElementById("close-modal-btn");
-  closeBtn.addEventListener("click", () => modal.close());
-}
-
-export function setupNewTaskModalHandler() {
-  const overlay = document.querySelector(".modal-overlay");
-  const newTaskBtn = document.getElementById("add-new-task-btn");
-  const form = document.querySelector(".modal-window");
-  const cancelBtn = document.getElementById("cancel-add-btn");
-
-  newTaskBtn.addEventListener("click", () => {
-    overlay.style.visibility = "visible";
-    overlay.showModal();
-  });
-
-  cancelBtn.addEventListener("click", () => overlay.close());
-
-  form.addEventListener("submit", (e) => {
-    e.preventDefault();
-    if (form.checkValidity()) {
-      addNewTask();
-    } else {
-      form.reportValidity();
-    }
-  });
-}
+let currentTaskId = null;
 
 export function openTaskModal(task) {
   const modal = document.getElementById("task-modal");
+
   document.getElementById("task-title").value = task.title;
   document.getElementById("task-desc").value = task.description;
   document.getElementById("task-status").value = task.status;
+
+  currentTaskId = task.id;
+
   modal.showModal();
+}
+
+/**
+ * Close modal
+ */
+export function setupModalCloseHandler() {
+  document.getElementById("close-modal-btn").addEventListener("click", () => {
+    document.getElementById("task-modal").close();
+  });
+
+  // SAVE CHANGES
+  document.getElementById("task-form").addEventListener("submit", (e) => {
+    e.preventDefault();
+
+    const tasks = loadTasksFromStorage();
+
+    const updatedTasks = tasks.map((task) => {
+      if (task.id === currentTaskId) {
+        return {
+          ...task,
+          title: document.getElementById("task-title").value,
+          description: document.getElementById("task-desc").value,
+          status: document.getElementById("task-status").value,
+        };
+      }
+      return task;
+    });
+
+    saveTasksToStorage(updatedTasks);
+
+    clearExistingTasks();
+    renderTasks(updatedTasks);
+
+    document.getElementById("task-modal").close();
+  });
+}
+
+/**
+ * New Task modal
+ */
+export function setupNewTaskModalHandler() {
+  const modal = document.querySelector(".modal-overlay");
+
+  document.getElementById("add-new-task-btn").addEventListener("click", () => {
+    modal.showModal();
+  });
+
+  document.getElementById("cancel-add-btn").addEventListener("click", () => {
+    modal.close();
+  });
+
+  document
+    .getElementById("new-task-modal-window")
+    .addEventListener("submit", (e) => {
+      e.preventDefault();
+
+      const tasks = loadTasksFromStorage();
+
+      const newTask = {
+        id: Date.now(),
+        title: document.getElementById("title-input").value,
+        description: document.getElementById("desc-input").value,
+        status: document.getElementById("select-status").value,
+      };
+
+      tasks.push(newTask);
+
+      saveTasksToStorage(tasks);
+
+      clearExistingTasks();
+      renderTasks(tasks);
+
+      modal.close();
+    });
 }
