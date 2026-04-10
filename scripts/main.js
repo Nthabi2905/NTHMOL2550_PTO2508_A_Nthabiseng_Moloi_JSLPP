@@ -12,48 +12,71 @@ import { fetchTasksFromAPI } from "./utils/api.js";
 const loadingEl = document.getElementById("loading");
 const errorEl = document.getElementById("error");
 
+/**
+ * Set up desktop hide/show sidebar buttons
+ */
 function setupSidebarToggle() {
   const hideSidebarBtn = document.getElementById("hide-sidebar-btn");
   const showSidebarBtn = document.getElementById("show-sidebar-btn");
+  const mobileToggleBtn = document.getElementById("toggle-sidebar");
+  const sidebar = document.getElementById("side-bar-div");
 
-  if (!hideSidebarBtn || !showSidebarBtn) return;
+  if (hideSidebarBtn && showSidebarBtn) {
+    hideSidebarBtn.addEventListener("click", () => {
+      document.body.classList.add("sidebar-hidden");
+      localStorage.setItem("kanbanSidebar", "hidden");
+    });
 
-  hideSidebarBtn.addEventListener("click", () => {
-    document.body.classList.add("sidebar-hidden");
-    localStorage.setItem("kanbanSidebar", "hidden");
-  });
+    showSidebarBtn.addEventListener("click", () => {
+      document.body.classList.remove("sidebar-hidden");
+      localStorage.setItem("kanbanSidebar", "shown");
+    });
 
-  showSidebarBtn.addEventListener("click", () => {
-    document.body.classList.remove("sidebar-hidden");
-    localStorage.setItem("kanbanSidebar", "shown");
-  });
+    const savedSidebarState = localStorage.getItem("kanbanSidebar");
+    if (savedSidebarState === "hidden") {
+      document.body.classList.add("sidebar-hidden");
+    }
+  }
 
-  const savedSidebarState = localStorage.getItem("kanbanSidebar");
+  if (mobileToggleBtn && sidebar) {
+    mobileToggleBtn.addEventListener("click", () => {
+      sidebar.classList.toggle("show-sidebar");
+    });
+  }
+}
 
-  if (savedSidebarState === "hidden") {
-    document.body.classList.add("sidebar-hidden");
+/**
+ * Set up theme toggle if the button exists
+ */
+function setupThemeToggle() {
+  const themeToggle = document.getElementById("theme-toggle");
+
+  const savedTheme = localStorage.getItem("theme");
+  if (savedTheme === "dark") {
+    document.body.classList.add("dark");
+  }
+
+  if (themeToggle) {
+    themeToggle.addEventListener("click", () => {
+      document.body.classList.toggle("dark");
+
+      localStorage.setItem(
+        "theme",
+        document.body.classList.contains("dark") ? "dark" : "light",
+      );
+    });
   }
 }
 
 /**
  * Initialise task board
  */
-
-function initTaskBoard() {
-  const tasks = loadTasksFromStorage();
-  clearExistingTasks();
-  renderTasks(tasks);
-  setupModalCloseHandler();
-  setupNewTaskModalHandler();
-  setupSidebarToggle();
-}
 async function initTaskBoard() {
   try {
     loadingEl.style.display = "block";
 
     let tasks = loadTasksFromStorage();
 
-    // If no local data → fetch from API
     if (!tasks || tasks.length === 0) {
       tasks = await fetchTasksFromAPI();
       saveTasksToStorage(tasks);
@@ -62,6 +85,7 @@ async function initTaskBoard() {
     clearExistingTasks();
     renderTasks(tasks);
   } catch (error) {
+    console.error(error);
     errorEl.style.display = "block";
   } finally {
     loadingEl.style.display = "none";
@@ -69,26 +93,8 @@ async function initTaskBoard() {
 
   setupModalCloseHandler();
   setupNewTaskModalHandler();
-  document.getElementById("toggle-sidebar").addEventListener("click", () => {
-    document.getElementById("side-bar-div").classList.toggle("show-sidebar");
-  });
-
-  const themeToggle = document.getElementById("theme-toggle");
-
-  themeToggle.addEventListener("click", () => {
-    document.body.classList.toggle("dark");
-
-    localStorage.setItem(
-      "theme",
-      document.body.classList.contains("dark") ? "dark" : "light",
-    );
-  });
-
-  // Load theme
-  const savedTheme = localStorage.getItem("theme");
-  if (savedTheme === "dark") {
-    document.body.classList.add("dark");
-  }
+  setupSidebarToggle();
+  setupThemeToggle();
 }
 
 document.addEventListener("DOMContentLoaded", initTaskBoard);
