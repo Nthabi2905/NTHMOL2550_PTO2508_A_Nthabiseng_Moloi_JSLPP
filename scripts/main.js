@@ -37,6 +37,9 @@ async function initTaskBoard() {
 
   setupModalCloseHandler();
   setupNewTaskModalHandler();
+  document.getElementById("toggle-sidebar").addEventListener("click", () => {
+    document.getElementById("side-bar-div").classList.toggle("show-sidebar");
+  });
 }
 
 document.addEventListener("DOMContentLoaded", initTaskBoard);
