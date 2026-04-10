@@ -51,6 +51,20 @@ export function setupModalCloseHandler() {
 
     document.getElementById("task-modal").close();
   });
+  document.getElementById("delete-task-btn").addEventListener("click", () => {
+    if (!confirm("Are you sure you want to delete this task?")) return;
+
+    let tasks = loadTasksFromStorage();
+
+    tasks = tasks.filter((task) => task.id !== currentTaskId);
+
+    saveTasksToStorage(tasks);
+
+    clearExistingTasks();
+    renderTasks(tasks);
+
+    document.getElementById("task-modal").close();
+  });
 }
 
 /**
