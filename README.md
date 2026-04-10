@@ -2,7 +2,7 @@
 
 ## 🔗 Live Demo
 
-(Netlify link)
+([Netlify link](https://nthabiseng-kanban-app.netlify.app/))
 
 ## 🎥 Presentation
 
