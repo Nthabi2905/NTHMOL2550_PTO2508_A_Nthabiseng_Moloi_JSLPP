@@ -421,18 +421,24 @@ dialog::backdrop {
 }
 
 /* Main buttons */
-.submit-btn,
-#task-form .save-btn,
-#task-form button[type="submit"] {
+.submit-btn {
+  width: 100%;
   background-color: var(--primary-btn-color);
   color: white;
-  border-radius: 24px;
   border: none;
+
+  border-radius: 999px; /* 🔥 makes it pill shape */
+
+  padding: 16px;
   font-size: 0.9375rem;
-  padding: 14px 24px;
   font-weight: 700;
+
   cursor: pointer;
-  width: 100%;
+  transition: background-color 0.2s ease;
+}
+
+.submit-btn:hover {
+  background-color: var(--primary-btn-hover);
 }
 
 .submit-btn:hover,
